@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login</title>
 </head>
 <body>
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Register</h2>
+    <h2>Login</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
     </form>
 {% endblock %}
-</form>
 </body>
 </html>

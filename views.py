@@ -1,12 +1,28 @@
 # views.py
 from datetime import datetime
-
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import User, Cinema, Session, Ticket
 from .forms import MovieForm
 from .forms import LoginForm, RegisterForm, BuyTicketForm
 
-def register(request):
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
+
+def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -16,19 +32,10 @@ def register(request):
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
 
-def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = User.objects.get(username=username)
-            if user.password == password:
-                request.session['username'] = username
-                return redirect('cinema_list')
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def cinema_list(request):
     cinemas = Cinema.objects.all()
