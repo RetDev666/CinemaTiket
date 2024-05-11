@@ -1,6 +1,9 @@
 # views.py
+from datetime import datetime
+
 from django.shortcuts import render, redirect
-from .models import User, Cinema, Session
+from .models import User, Cinema, Session, Ticket
+from .forms import MovieForm
 from .forms import LoginForm, RegisterForm, BuyTicketForm
 
 def register(request):
@@ -59,3 +62,12 @@ def buy_ticket(request, session_id):
 
 def ticket_confirmation(request):
     return render(request, 'ticket_confirmation.html')
+
+def add_movie(request):
+    if request.method == 'POST':
+        form = MovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = MovieForm()
+    return render(request, 'add_movie.html', {'form': form})
