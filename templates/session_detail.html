@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Detail</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<h2>{{ session.movie }}</h2>
+<p>Cinema: {{ session.cinema.name }}</p>
+<p>Start Time: {{ session.start_time }}</p>
+<p>Ticket Price: {{ session.ticket_price }}</p>
+<p>Available Seats: {{ session.available_seats }}</p>
+<a href="{% url 'buy_ticket' session.id %}">Buy Ticket</a>
+</body>
+</html>

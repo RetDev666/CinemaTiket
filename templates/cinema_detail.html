@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema Detail</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<h2>{{ cinema.name }}</h2>
+<p>Location: {{ cinema.location }}</p>
+<p>Contact Info: {{ cinema.contact_info }}</p>
+<p>Opening Hours: {{ cinema.opening_hours }}</p>
+<h3>Halls:</h3>
+{% for hall in cinema.halls.all %}
+    <p>{{ hall.name }} (Capacity: {{ hall.capacity }})</p>
+{% endfor %}
+<h3>Sessions:</h3>
+{% for session in sessions %}
+    <p>{{ session.movie }} ({{ session.start_time }}) - {{ session.ticket_price }} ({{ session.available_seats }} seats left)</p>
+    <a href="{% url 'session_detail' session.id %}">View Details</a>
+{% endfor %}
+</body>
+</html>

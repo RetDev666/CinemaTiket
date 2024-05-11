@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% for cinema in cinemas %}
+    <h2>{{ cinema.name }}</h2>
+    <p>Location: {{ cinema.location }}</p>
+    <p>Contact Info: {{ cinema.contact_info }}</p>
+    <p>Opening Hours: {{ cinema.opening_hours }}</p>
+    <a href="{% url 'cinema_detail' cinema.id %}">View Details</a>
+{% endfor %}
+</body>
+</html>
